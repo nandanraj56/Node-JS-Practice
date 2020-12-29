@@ -1,10 +1,8 @@
-console.log('Starting');
+const request = require('request');
+const url = 'http://api.weatherstack.com/current?access_key=12992ffc526f209ee4207732da9fdb7c&query=37.8267,-122.42';
 
-setTimeout(()=>{
-    console.log('2 sec timer');
-},2000);
-setTimeout(()=>{
-    console.log('0 Sec timer')
-},0);
-
-console.log('Stopping');
+request({url:url},(error, response)=>{
+    const data = JSON.parse(response.body);
+    //console.log(data)
+    console.log(data.current)
+});
