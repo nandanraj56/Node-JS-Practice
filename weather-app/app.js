@@ -7,3 +7,14 @@ request({url:url, json:true},(error, response)=>{
     //console.log(response.body.current)
     console.log(data.weather_descriptions[0]+'. it is currently '+data.temperature+' degress out. It feels like '+data.feelslike+' degress out!');
 });
+
+const mapurl = 'http://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoibmFuZGFucmFqNTYiLCJhIjoiY2tqYWF2aWM2MjcxajJzbnF2bXU0c2ZmaCJ9.0Co3EsHOltSdKXEFaY4Nsg&limit=1';
+
+request({url:mapurl,json:true},(error,response)=>{
+
+    //console.log(response.body.features[0].center);
+    const latitude = response.body.features[0].center[1];
+    const longitude = response.body.features[0].center[0];
+    console.log(latitude, longitude);
+
+});
