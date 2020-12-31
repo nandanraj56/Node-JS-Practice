@@ -2,14 +2,25 @@ const request = require('request');
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
+const input = process.argv[2];
+if(!input){
+    return console.log('Please enter a location');
+}
 
-geocode('New Jersy',(error,response)=>{
-    console.log(error);
-    console.log(response);
+
+geocode(input,(error,data)=>{
+    if(error){
+        return console.log(error);
+    }
+
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
+
+        if(error){
+            return console.log(error);
+        }
+        console.log(data.location);
+        console.log(forecastData)
+      });
     
 });
 
-forecast(-75.7088, 44.145, (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
-  });
