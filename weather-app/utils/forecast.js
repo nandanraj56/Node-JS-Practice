@@ -12,7 +12,7 @@ const forecast = (latitude,longitude, callback) =>{
     
         }
         else{
-            const data = response.body.current;
+            const {current:data} = response.body;
             callback(undefined,data.weather_descriptions[0]+'. it is currently '+data.temperature+' degress out. It feels like '+data.feelslike+' degress out!');
         }
       
