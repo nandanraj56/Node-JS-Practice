@@ -8,11 +8,11 @@ if(!input){
 }
 
 
-geocode(input,(error,{latitude,longitude,location})=>{
+geocode(input,(error,{latitude,longitude,location}={})=>{
     if(error){
         return console.log(error);
     }
-    console.log(latitude);
+    //console.log(location);
     forecast(latitude, longitude, (error, forecastData) => {
 
         if(error){
