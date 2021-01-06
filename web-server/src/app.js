@@ -1,17 +1,12 @@
+const path = require('path')
 const { response } = require('express');
 const express = require('express');
 const app = express();
 
-app.get('/',(req,res)=>{
-    res.send('Hello Express');
-});
-app.get('/help',(req,res)=>{
-    res.send('Help Center');
+const publicStaticPath = path.join(__dirname,'../public');
 
-});
-app.get('/about',(req,res)=>{
-    res.send('<h3>About page</h3>');
-});
+app.use(express.static(publicStaticPath));
+
 app.get('/weather',(req,res)=>{
     const obj = {
         location: 'Bettiah',
