@@ -3,11 +3,11 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
-//const publicStaticPath = path.join(__dirname,'../public');
+const publicStaticPath = path.join(__dirname,'/public');
 
 app.set('view engine','hbs');
 
-//app.use(express.static(publicStaticPath));
+app.use(express.static(publicStaticPath));
 
 app.get('',(req,res)=>{
     res.render('index',{
