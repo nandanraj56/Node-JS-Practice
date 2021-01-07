@@ -3,10 +3,16 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
-const publicStaticPath = path.join(__dirname,'/public');
+//Setup path for express config
+const publicStaticPath = path.join(__dirname,'../public');
+const viewsPath = path.join(__dirname,'../views');
 
+console.log(publicStaticPath)
+//Setup handle bar and views location
 app.set('view engine','hbs');
+app.set('views',viewsPath);
 
+//Setup Static directory to serve
 app.use(express.static(publicStaticPath));
 
 app.get('',(req,res)=>{
