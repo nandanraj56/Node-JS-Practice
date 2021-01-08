@@ -50,6 +50,22 @@ app.get('/weather',(req,res)=>{
     res.send(obj);
 })
 
+app.get('/help/*',(req,res)=>{
+    res.render('404',{
+        title:'Help',
+        message:'Help articale not found',
+        name:'Nandan Raj'
+    });
+});
+app.get('*',(req,res)=>{
+    
+    res.render('404',{
+        title:'404',
+        message:' Page not found',
+        name:'Nandan Raj'
+    })
+})
+
 app.listen(3000,()=>{
     console.log('Listening');
 });
