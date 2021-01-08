@@ -1,71 +1,67 @@
 const path = require('path')
-const hbs = require('hbs');
-const { response } = require('express');
-const express = require('express');
-const app = express();
+const express = require('express')
+const hbs = require('hbs')
 
-//Setup path for express config
-const publicStaticPath = path.join(__dirname,'../public');
-const viewsPath = path.join(__dirname,'../templates/views');
+const app = express()
 
-const partialPath = path.join(__dirname,'../templates/partials');
-hbs.registerPartials(partialPath);
+// Define paths for Express config
+const publicDirectoryPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates/views')
+const partialsPath = path.join(__dirname, '../templates/partials')
 
-console.log(publicStaticPath)
-//Setup handle bar and views location
-app.set('view engine','hbs');
-app.set('views',viewsPath);
+// Setup handlebars engine and views location
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+hbs.registerPartials(partialsPath)
 
-//Setup Static directory to serve
-app.use(express.static(publicStaticPath));
+// Setup static directory to serve
+app.use(express.static(publicDirectoryPath))
 
-app.get('',(req,res)=>{
-    res.render('index',{
-        title:'Weather Home',
-        name:'Nandan Raj'
-    });
-});
-
-app.get('/about',(req,res)=>{
-    res.render('about',{
-        title:'About',
-        name:'Nandan Raj'
-    });
-});
-
-app.get('/help',(req,res)=>{
-    res.render('help',{
-        title:'Help',
-        message:'This is a examplet help text',
-        name:'Nandan Raj'
-    });
-});
-
-
-app.get('/weather',(req,res)=>{
-    const obj = {
-        location: 'Bettiah',
-        forecast: 'Its 25 degrees out'
-    }
-    res.send(obj);
-})
-
-app.get('/help/*',(req,res)=>{
-    res.render('404',{
-        title:'Help',
-        message:'Help articale not found',
-        name:'Nandan Raj'
-    });
-});
-app.get('*',(req,res)=>{
-    
-    res.render('404',{
-        title:'404',
-        message:' Page not found',
-        name:'Nandan Raj'
+app.get('', (req, res) => {
+    res.render('index', {
+        title: 'Weather',
+        name: 'Andrew Mead'
     })
 })
 
-app.listen(3000,()=>{
-    console.log('Listening');
-});
+app.get('/about', (req, res) => {
+    res.render('about', {
+        title: 'About Me',
+        name: 'Andrew Mead'
+    })
+})
+
+app.get('/help', (req, res) => {
+    res.render('help', {
+        helpText: 'This is some helpful text.',
+        title: 'Help',
+        name: 'Andrew Mead'
+    })
+})
+
+app.get('/weather', (req, res) => {
+    res.send({
+        forecast: 'It is snowing',
+        location: 'Philadelphia'
+    })
+})
+
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Andrew Mead',
+        errorMessage: 'Help article not found.'
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        name: 'Andrew Mead',
+        errorMessage: 'Page not found.'
+    })
+})
+
+app.listen(3000, () => {
+    console.log('Server is up on port 3000.')
+})
