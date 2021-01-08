@@ -1,11 +1,15 @@
 const path = require('path')
+const hbs = require('hbs');
 const { response } = require('express');
 const express = require('express');
 const app = express();
 
 //Setup path for express config
 const publicStaticPath = path.join(__dirname,'../public');
-const viewsPath = path.join(__dirname,'../views');
+const viewsPath = path.join(__dirname,'../templates/views');
+
+const partialPath = path.join(__dirname,'../templates/partials');
+hbs.registerPartials(partialPath);
 
 console.log(publicStaticPath)
 //Setup handle bar and views location
@@ -32,7 +36,8 @@ app.get('/about',(req,res)=>{
 app.get('/help',(req,res)=>{
     res.render('help',{
         title:'Help',
-        message:'This is a examplet help text'
+        message:'This is a examplet help text',
+        name:'Nandan Raj'
     });
 });
 
