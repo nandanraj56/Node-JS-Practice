@@ -2,9 +2,13 @@
 
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
+const ObjectID = mongodb.ObjectID;
 
 const connectionURL = 'mongodb://localhost:27017'
 const databaseName = 'task-manager';
+
+const id = new ObjectID();
+console.log(id.getTimestamp());
 
 MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true},(error,client)=>{
     if(error){
@@ -42,7 +46,7 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
     });*/
 
     //Excercise
-    db.collection('task').insertMany([
+    /*db.collection('task').insertMany([
         {
             description:"Test 1",
             completed:true
@@ -61,7 +65,8 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
         }
         console.log(result.ops);
 
-    });
+    });*/
+
 
 
 });
