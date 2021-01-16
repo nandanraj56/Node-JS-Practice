@@ -7,14 +7,48 @@ const ObjectID = mongodb.ObjectID;
 const connectionURL = 'mongodb://localhost:27017'
 const databaseName = 'task-manager';
 
-const id = new ObjectID();
-console.log(id.getTimestamp());
+/*const id = new ObjectID();
+console.log(id.getTimestamp());*/
 
 MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true},(error,client)=>{
     if(error){
         return console.log(error);
     }
     const db = client.db(databaseName);
+    //To query one data
+   /* db.collection('users').findOne({name:"Mukesh"},(error,data)=>{
+        if(error)
+            return console.log('Error')
+        
+        console.log(data);
+    });
+    */
+   
+    //Query by id
+    /*db.collection('users').findOne({_id:new ObjectID('6001ecbb3539c325502de2dd')},(error,data)=>{
+        if(error)
+            return console.log('Error')
+        
+        console.log(data);
+    });*/
+
+    //Find multiple
+    //it returns mongodb.Cursor, we can conevrt to array or take one by one, similar to resultset
+   /* db.collection('users').find({age:27}).toArray((error,data)=>{
+        if(error)
+            return console.log('Error')
+        
+        console.log(data);
+    })*/
+
+    //Find and count
+    /*db.collection('users').find({age:27}).count((error,data)=>{
+        if(error)
+            return console.log('Error')
+        
+        console.log(data);
+    })*/
+
     //To insert one
     /*db.collection('users').insertOne({
         name:'Nandan Thakur',
@@ -67,6 +101,18 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
 
     });*/
 
+    //Excercize
+    db.collection('task').findOne({"_id":new ObjectID('6001eead1031cf03e832e331')},(error,result)=>{
+        if(error)
+            return console.log('Error has occured');
 
+        console.log(result)
+    })
+    db.collection('task').find({'completed':false}).toArray((error,result)=>{
+        if(error)
+            return console.log('Error has occured');
+
+        console.log(result)
+    })
 
 });
