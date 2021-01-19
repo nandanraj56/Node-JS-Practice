@@ -152,4 +152,23 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
         console.log(error)
     })*/
 
+    //Delete many doument
+
+    /*db.collection('users').deleteMany({
+        "age": 23
+    }).then((data)=>{
+        console.log(data.result)
+    }).catch((error)=>{
+        console.log(error)
+    })*/
+    
+    //Detete one
+    db.collection('task').deleteOne({
+        "description":"Test 1"
+    }).then((data)=>{
+        console.log(data.result)
+    }).catch((error)=>{
+        console.log(error)
+    })
+
 });
