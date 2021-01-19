@@ -102,7 +102,7 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
     });*/
 
     //Excercize
-    db.collection('task').findOne({"_id":new ObjectID('6001eead1031cf03e832e331')},(error,result)=>{
+   /* db.collection('task').findOne({"_id":new ObjectID('6001eead1031cf03e832e331')},(error,result)=>{
         if(error)
             return console.log('Error has occured');
 
@@ -113,6 +113,43 @@ MongoClient.connect(connectionURL,{useNewUrlParser:true,useUnifiedTopology: true
             return console.log('Error has occured');
 
         console.log(result)
-    })
+    })*/
+
+    //Update one document
+
+   /* db.collection('users').updateOne({"_id": new ObjectID('6001ecbb3539c325502de2dd')},{
+        $set:{
+            name:"muksku"
+        }
+
+    }).then((data)=>{
+        console.log(data.result)
+    }).catch((error)=>{
+        console.log(error)
+    });*/
+
+    //Update many document
+
+   /* db.collection('users').updateMany({"age":27},{
+        $inc:{
+            age:1
+        }
+    }).then((data)=>{
+        console.log(data)
+    }).catch((error)=>{
+        console.log(error);
+    });*/
+
+    //Excercise
+
+    /*db.collection('task').updateMany({"completed":false},{
+        $set:{
+            completed:true
+        }
+    }).then((data)=>{
+        console.log(data.result)
+    }).catch((error)=>{
+        console.log(error)
+    })*/
 
 });
