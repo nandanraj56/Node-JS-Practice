@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+const validator = require('validator')
 
 mongoose.connect('mongodb://localhost:27017/task-manager-api',{useNewUrlParser:true, useCreateIndex:true, useUnifiedTopology:true})
     .then((data)=>{
@@ -7,28 +8,48 @@ mongoose.connect('mongodb://localhost:27017/task-manager-api',{useNewUrlParser:t
         console.log(e)
     })
 
-/*const User = mongoose.model('Users',{
+const User = mongoose.model('Users',{
     name:{
-        type:String
+        type:String,
+        required:true,
+        trim:true,
+    },
+    email:{
+        type:String,
+        required:true,
+        trim:true,
+        lowercase:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Email is not valid')
+            }
+        }
     },
     age:{
-        type:Number
+        type:Number,
+        default:0,
+        validate(value){
+            if(value<1)
+                throw new Error('Age must be positive')
+        }
     }
 })
 
 const x = new User({
     name:"Nandan",
-    age:"wdad"
+    age:7,
+    email:"nana@dfd.vAom "
 });
 x.save().then((data)=>{
     console.log(data)
 }).catch((e)=>{
-    console.log(e._message);
-})*/
+    console.log(e);
+})
 
-const Task = mongoose.model('Task',{
+/*const Task = mongoose.model('Task',{
     description:{
-        type:String
+        type:String,
+        required:true
     },
     completed:{
         type:Boolean
@@ -45,4 +66,4 @@ t.save().then((data)=>{
     console.log(data)
 }).catch((e)=>{
     console.log(e)
-})
+})*/
