@@ -25,6 +25,18 @@ const User = mongoose.model('Users',{
             }
         }
     },
+    password:{
+        type:String,
+        required:true,
+        validate(value){
+            if(value.toLowerCase().indexOf("password")>-1){
+                throw Error('Password should not be password')
+            }
+        },
+        minLength:6,
+        trim:true
+        
+    },
     age:{
         type:Number,
         default:0,
@@ -35,35 +47,38 @@ const User = mongoose.model('Users',{
     }
 })
 
-const x = new User({
+/*const x = new User({
     name:"Nandan",
     age:7,
-    email:"nana@dfd.vAom "
+    email:"nana@dfd.vAom ",
+    password:"password"
 });
 x.save().then((data)=>{
     console.log(data)
 }).catch((e)=>{
     console.log(e);
-})
+})*/
 
-/*const Task = mongoose.model('Task',{
+const Task = mongoose.model('Task',{
     description:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     completed:{
-        type:Boolean
+        type:Boolean,
+        default:false
     }
 
 })
 
 const t = new Task({
-    description:"Clean room",
-    completed:false
+    description:"Clean tasks",
+    
 })
 
 t.save().then((data)=>{
     console.log(data)
 }).catch((e)=>{
     console.log(e)
-})*/
+})
