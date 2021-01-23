@@ -8,26 +8,3 @@ mongoose.connect('mongodb://localhost:27017/task-manager-api',{useNewUrlParser:t
         console.log(e)
     })
 
-/*const Task = mongoose.model('Task',{
-    description:{
-        type:String,
-        required:true,
-        trim:true
-    },
-    completed:{
-        type:Boolean,
-        default:false
-    }
-
-})*/
-
-/*const t = new Task({
-    description:"Clean tasks",
-    
-})
-
-t.save().then((data)=>{
-    console.log(data)
-}).catch((e)=>{
-    console.log(e)
-})*/

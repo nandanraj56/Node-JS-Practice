@@ -1,6 +1,5 @@
 const validator = require('validator')
 const mongoose = require('mongoose')
-require("../db/mongoose")
 
 const User = mongoose.model('Users',{
     name:{
