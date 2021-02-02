@@ -103,3 +103,27 @@ app.get("/tasks/:id",async (req, res) => {
     }
     
 })
+
+app.patch("/tasks/:id",async(req,res)=>{
+    const allowedUpdates = ["completed","description"]
+    const updates = Object.keys(req.body)
+
+    const isValidUpdate = updates.every((element)=>{
+        return allowedUpdates.includes(element)
+    })
+    
+    if (!isValidUpdate)
+        return res.status(400).send({ "error": "Invalid Request" })
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        if (!task) {
+            return res.status(404).send({ error: "not found" })
+        }
+        res.send(task)
+    }catch(e){
+        res.status(500).send(e)
+    }
+    
+    
+
+})
