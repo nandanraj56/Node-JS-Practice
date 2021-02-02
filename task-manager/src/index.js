@@ -1,4 +1,5 @@
 const express = require("express")
+const bcrypt = require("bcryptjs")
 const userRouter = require("./routers/user")
 const taskRouter = require("./routers/task")
 require("./db/mongoose")
@@ -13,3 +14,12 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log('Listening')
 })
+
+const test = async()=>{
+    const plainPass = "hello123@"
+    const hashedPass = await bcrypt.hash(plainPass,8)
+    console.log(hashedPass)
+
+    console.log(await bcrypt.compare(plainPass,hashedPass))
+}
+test()
