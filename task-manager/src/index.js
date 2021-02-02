@@ -51,6 +51,24 @@ app.get("/users/:id",async (req, res) => {
         res.status(500).send()
     }
 })
+app.patch("/users/:id",async(req,res)=>{
+    const allowedUpdates = ['name','email','password','age']
+    const updates = Object.keys(req.body)
+    const isValid = updates.every((update)=>{
+        return allowedUpdates.includes(update);
+    })
+    if(!isValid){
+       return res.status(400).send()
+    }
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id,req.body,{new:true , runValidators:true})
+        if(!user)
+           return res.status(400).send()
+        res.send(user)
+    }catch(e){
+        res.status(500).send(e)
+    }
+});
 
 app.post("/tasks",async (req, res) => {
     
