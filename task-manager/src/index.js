@@ -15,11 +15,11 @@ app.listen(port, () => {
     console.log('Listening')
 })
 
-const test = async()=>{
+/*const test = async()=>{
     const plainPass = "hello123@"
     const hashedPass = await bcrypt.hash(plainPass,8)
     console.log(hashedPass)
 
     console.log(await bcrypt.compare(plainPass,hashedPass))
 }
-test()
+test()*/
