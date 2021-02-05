@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs")
 const userRouter = require("./routers/user")
 const taskRouter = require("./routers/task")
 require("./db/mongoose")
+const jwt = require("jsonwebtoken")
 
 const app = express()
 
@@ -23,3 +24,12 @@ app.listen(port, () => {
     console.log(await bcrypt.compare(plainPass,hashedPass))
 }
 test()*/
+
+const test = async()=>{
+    const token = await jwt.sign({_id:"abc123"},"mysecretstring",{expiresIn: "7 days"})
+    console.log(token)
+    const data = jwt.verify(token,"mysecretstring")
+    console.log(data)
+
+}
+test()
