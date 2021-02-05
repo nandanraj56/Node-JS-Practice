@@ -25,11 +25,11 @@ app.listen(port, () => {
 }
 test()*/
 
-const test = async()=>{
+/*const test = async()=>{
     const token = await jwt.sign({_id:"abc123"},"mysecretstring",{expiresIn: "7 days"})
     console.log(token)
     const data = jwt.verify(token,"mysecretstring")
     console.log(data)
 
 }
-test()
+test()*/
