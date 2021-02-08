@@ -1,7 +1,9 @@
 const express = require("express")
 const User = require("../models/user")
+const auth = require("../middleware/auth")
 const router = express.Router()
 
+//Signup
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     try {
@@ -15,7 +17,7 @@ router.post('/users', async (req, res) => {
     }
 
 })
-
+//getting users
 router.get("/users", async (req, res) => {
     try {
         const users = await User.find({})
@@ -26,7 +28,11 @@ router.get("/users", async (req, res) => {
         res.status(500).send()
     }
 })
-
+//getting profile
+router.get("/users/me", auth,async (req, res) => {
+    res.send(req.user)
+})
+//gettig a user
 router.get("/users/:id",async (req, res) => {
     try {
         const _id = req.params.id
@@ -40,6 +46,7 @@ router.get("/users/:id",async (req, res) => {
         res.status(500).send()
     }
 })
+//updating a user
 router.patch("/users/:id",async(req,res)=>{
     const allowedUpdates = ['name','email','password','age']
     const updates = Object.keys(req.body)
@@ -63,6 +70,8 @@ router.patch("/users/:id",async(req,res)=>{
         res.status(500).send(e)
     }
 });
+
+//deleting a user
 router.delete("/users/:id",async(req,res)=>{
     try{
         const user = await User.findByIdAndDelete(req.params.id)
@@ -75,13 +84,15 @@ router.delete("/users/:id",async(req,res)=>{
 
 })
 
+//Login 
+
 router.post("/users/login",async(req,res)=>{
     try{
         const user = await User.findByCredentials(req.body.email,req.body.password)
         const token = await user.getAuthToken()
         res.send({user,token})
     }catch(e){
-        res.status(400).send(e)
+        res.status(400).send("Invalid Login")
     }
     
 })
