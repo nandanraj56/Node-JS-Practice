@@ -2,6 +2,7 @@ const validator = require('validator')
 const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+//const { delete } = require('../routers/user')
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -47,6 +48,14 @@ const userSchema = new mongoose.Schema({
         }
     }]
 })
+
+//instance level method
+userSchema.methods.toJSON = function(){
+    const userObj = this.toObject()
+    delete userObj.password
+    delete userObj.tokens
+    return userObj
+}
 userSchema.methods.getAuthToken= async function(){
     const user = this
     const token = await jwt.sign({_id:user._id.toString()},"sdsd")
@@ -56,12 +65,13 @@ userSchema.methods.getAuthToken= async function(){
     return token
     
 };
+//model level method
 userSchema.statics.findByCredentials = async (email,password) =>{
     const user = await User.findOne({email})
     if(!user){
         throw new Error("Invalid login")
     }
-    console.log(user)
+    //console.log(user)
     const isMatch = await bcrypt.compare(password,user.password)
     if(!isMatch){
         throw new Error("Invalid login")

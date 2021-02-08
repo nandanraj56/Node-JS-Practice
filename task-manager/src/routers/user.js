@@ -92,6 +92,7 @@ router.post("/users/login", async (req, res) => {
         const token = await user.getAuthToken()
         res.send({ user, token })
     } catch (e) {
+        console.log("catch"+e)
         res.status(400).send("Invalid Login")
     }
 
