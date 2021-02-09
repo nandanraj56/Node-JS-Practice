@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const User = require("../models/user")
 const Task = mongoose.model('Task',{
     description:{
         type:String,
@@ -13,7 +12,7 @@ const Task = mongoose.model('Task',{
     owner:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:User
+        ref:"User"
     }
 
 })
