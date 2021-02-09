@@ -48,6 +48,12 @@ const userSchema = new mongoose.Schema({
         }
     }]
 })
+//Virtual view
+userSchema.virtual('tasks',{
+    ref:'Task',
+    localField:'_id',
+    foreignField:'owner'
+})
 
 //instance level method
 userSchema.methods.toJSON = function(){
@@ -78,6 +84,7 @@ userSchema.statics.findByCredentials = async (email,password) =>{
     }
     return user
 }
+//before saving rule, similar to before business rule
 userSchema.pre("save",async function(next){
     const user = this
     if(user.isModified("password")){

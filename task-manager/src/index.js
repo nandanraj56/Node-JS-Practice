@@ -4,15 +4,12 @@ const userRouter = require("./routers/user")
 const taskRouter = require("./routers/task")
 require("./db/mongoose")
 const jwt = require("jsonwebtoken")
+const User = require("./models/user")
+const Task = require("./models/user")
 
 const app = express()
 
 app.use(express.json())
-/*app.use((req,res,next)=>{
-    console.log(req)
-    res.status(503).send("Site Under maintenance")
-    
-})*/
 app.use(userRouter)
 app.use(taskRouter)
 
@@ -23,20 +20,11 @@ app.listen(port, () => {
     console.log('Listening')
 })
 
-/*const test = async()=>{
-    const plainPass = "hello123@"
-    const hashedPass = await bcrypt.hash(plainPass,8)
-    console.log(hashedPass)
-
-    console.log(await bcrypt.compare(plainPass,hashedPass))
-}
-test()*/
-
-/*const test = async()=>{
-    const token = await jwt.sign({_id:"abc123"},"mysecretstring",{expiresIn: "7 days"})
-    console.log(token)
-    const data = jwt.verify(token,"mysecretstring")
-    console.log(data)
+const main = async() => {
+    const user = await User.findById('602172562036403500229b1e')
+    await user.populate('tasks').execPopulate()
+    console.log(user.tasks)
 
 }
-test()*/
+main()
+
