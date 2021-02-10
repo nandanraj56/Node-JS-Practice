@@ -5,7 +5,7 @@ const taskRouter = require("./routers/task")
 require("./db/mongoose")
 //const jwt = require("jsonwebtoken")
 //const User = require("./models/user")
-//const Task = require("./models/task")
+const Task = require("./models/task")
 
 const app = express()
 
@@ -15,16 +15,16 @@ app.use(taskRouter)
 
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 app.listen(port, () => {
-    console.log('Listening')
+    console.log('Listening at '+port)
 })
 
 /*const main = async() => {
     //task-> user
-    /*const task = await Task.findById("60223360b1c9fb2c58317797")
+    const task = await Task.findById("60225ac9e93ec00edc16e333")
     await task.populate("owner").execPopulate()
-    console.log(task.owner)*/
+    console.log(task.owner)
     //user-> tasks
     /*const user = await User.findById('602172562036403500229b1e')
     await user.populate('tasks').execPopulate()
