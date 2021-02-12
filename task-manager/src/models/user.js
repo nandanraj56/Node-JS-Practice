@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const Task = require('./task')
+const logger = require("../../logger/log")
 //const { delete } = require('../routers/user')
 const userSchema = new mongoose.Schema({
     name:{
@@ -74,7 +75,12 @@ userSchema.methods.getAuthToken= async function(){
     const token = await jwt.sign({_id:user._id.toString()},process.env.JWT_SECRET)
     //console.log(token)
     user.tokens = user.tokens.concat({ token })
-    await user.save()
+    try{
+        await user.save()
+    }catch(e){
+        logger(e)
+    }
+    
     return token
     
 };
@@ -101,7 +107,12 @@ userSchema.pre("save",async function(next){
 })
 userSchema.pre("remove",async function(next){
     const user = this
-    await Task.deleteMany({ owner: user._id })
+    try{
+        await Task.deleteMany({ owner: user._id })
+    }catch(e){
+        logger(e)
+    }
+    
     next()
 })
 const User = mongoose.model('Users',userSchema)

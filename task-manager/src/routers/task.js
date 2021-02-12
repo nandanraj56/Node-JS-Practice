@@ -2,6 +2,7 @@ const Task = require("../models/task")
 const express = require("express")
 const auth = require("../middleware/auth")
 const router = express.Router()
+const logger = require("../../logger/log")
 
 //creating a task
 router.post("/tasks", auth, async (req, res) => {
@@ -16,6 +17,7 @@ router.post("/tasks", auth, async (req, res) => {
         res.status(201).send(task)
     }
     catch (e) {
+        logger(e)
         res.status(400).send(e)
     }
 })
@@ -58,7 +60,7 @@ router.get("/tasks",auth, async (req, res) => {
         }).execPopulate()
         res.send(req.user.tasks)
     } catch (e) {
-        console.log(e)
+        logger(e)
         res.status(500).send(e)
     }
 })
@@ -73,7 +75,7 @@ router.get("/tasks/:id", auth, async (req, res) => {
 
         res.send(task)
     } catch (e) {
-        console.log(e)
+        logger(e)
         res.status(500).send()
     }
 
@@ -100,6 +102,7 @@ router.patch("/tasks/:id",auth, async (req, res) => {
         await task.save()
         res.send(task)
     } catch (e) {
+        logger(e)
         res.status(500).send(e)
     }
 
@@ -115,6 +118,7 @@ router.delete("/tasks/:id",auth, async (req, res) => {
             return res.status(404).send({ error: "not found" })
         res.send(task)
     } catch (e) {
+        logger(e)
         res.status(500).send(e)
     }
 

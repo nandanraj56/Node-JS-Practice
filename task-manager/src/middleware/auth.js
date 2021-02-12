@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require("../models/user")
+const logger = require("../../logger/log")
 
 
 const verifyToken = async(req,res,next)=>{
@@ -16,6 +17,7 @@ const verifyToken = async(req,res,next)=>{
         next()
      
     }catch(e){
+        logger(e)
         res.status(401).send({error:"Please Authenticate"})
     }
     

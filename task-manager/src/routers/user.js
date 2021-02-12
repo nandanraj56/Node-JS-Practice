@@ -3,6 +3,7 @@ const User = require("../models/user")
 const auth = require("../middleware/auth")
 const multer = require("multer")
 const sharp = require('sharp')
+const logger = require("../../logger/log")
 const { sendWelcomeEmail, sendCancellationEmail } = require("../emails/account")
 
 const router = express.Router()
@@ -17,8 +18,9 @@ router.post('/users', async (req, res) => {
         sendWelcomeEmail(data.name,data.email)
         res.status(201).send({ data, token })
     }
-    catch (error) {
-        res.status(400).send(error)
+    catch (e) {
+        logger(e)
+        res.status(400).send(e)
     }
 
 })
@@ -44,6 +46,7 @@ router.patch("/users/me", auth, async (req, res) => {
         await req.user.save()
         res.send(req.user)
     } catch (e) {
+        logger(e)
         res.status(500).send(e)
     }
 });
@@ -57,7 +60,7 @@ router.delete("/users/me", auth, async (req, res) => {
         sendCancellationEmail(req.user.name,req.user.email)
         res.send(req.user)
     } catch (e) {
-        console.log(e)
+        logger(e)
         res.status(500).send(e)
     }
 
@@ -71,7 +74,7 @@ router.post("/users/login", async (req, res) => {
         const token = await user.getAuthToken()
         res.send({ user, token })
     } catch (e) {
-        console.log("catch" + e)
+        logger(e)
         res.status(400).send("Invalid Login")
     }
 
@@ -84,6 +87,7 @@ router.post("/users/logout", auth, async (req, res) => {
         await req.user.save()
         res.send()
     } catch (e) {
+        logger(e)
         res.status(500).send()
     }
 
@@ -96,6 +100,7 @@ router.post("/users/logoutAll", auth, async (req, res) => {
         await req.user.save()
         res.send()
     } catch (e) {
+        logger(e)
         res.status(500).send()
     }
 })
@@ -120,6 +125,7 @@ router.post('/users/me/avatar',auth, upload.single("avatar"),async(req, res)=>{
     await req.user.save()
     res.send()
 },(error,req,res,next)=>{
+    logger(error)
     res.status(400).send({error: error.message})
 
 })
@@ -131,6 +137,7 @@ router.delete('/users/me/avatar',auth,async(req,res)=>{
         res.send(req.user)
 
     }catch(e){
+        logger(e)
         res.status(500).send()
     }
 })
@@ -144,6 +151,7 @@ router.get("/users/:id/avatar",async(req,res)=>{
         res.set("Content-type","image/png")
         res.send(user.avatar)
     }catch(e){
+        logger(e)
         res.status(402).send()
     }
 })
