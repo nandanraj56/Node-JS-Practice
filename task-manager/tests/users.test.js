@@ -32,7 +32,7 @@ test('Should signup a user', async () => {
     const user = await Users.findById({ _id: response.body.data._id })
     //User is not null
     expect(user).not.toBeNull()
-    console.log(response.body.data)
+    //console.log(response.body.data)
     //Matching object
     expect(response.body).toMatchObject({
         data: {
@@ -74,7 +74,7 @@ test('Should delete account for athenticated user', async () => {
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
-    console.log(response.body)
+    //console.log(response.body)
     //Validate user is really deleted
     const user = await Users.findById({_id:response.body._id})
     expect(user).toBeNull()
