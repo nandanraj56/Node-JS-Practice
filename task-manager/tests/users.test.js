@@ -3,6 +3,7 @@ const request = require('supertest')
 const Users = require('../src/models/user')
 const jwt = require('jsonwebtoken')
 const mongodb = require('mongodb')
+const { send } = require("@sendgrid/mail")
 const userID = new mongodb.ObjectID()
 const userOne = {
     _id: userID,
@@ -91,4 +92,33 @@ test('Should not delete an unatheticated user', async () => {
 test('Validate new token is saved',async()=>{
     const user = await Users.findById({_id:userOne._id})
     expect(user.tokens[0].token).toBe(`${userOne.tokens[0].token}`)
+})
+
+//Test for Avatar upload
+test('Should upload Avatar upload',async()=>{
+    const response = await request(app).post('/users/me/avatar')
+        .set('Authorization', `${userOne.tokens[0].token}`)
+        .attach('avatar',"tests/fixtures/test.png")
+        .expect(200)
+
+        const user = await Users.findById({_id:userID})
+        expect(user.avatar).toEqual(expect.any(Buffer))
+})
+
+//Test for User Updates
+test('Should Update valid user fiels',async()=>{
+    await request(app).patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            name:'xyz',
+            email:'fhg@xyz.com'
+        }).expect(200)
+})
+
+test('Should not update invalid user fields',async()=>{
+    await request(app).patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            location:"jhgjhgh"
+        }).expect(400)
 })
