@@ -16,11 +16,17 @@ io.on('connection',(socket)=>{
     console.log("socket connected")
     socket.emit('message',"Welcome!")
     socket.broadcast.emit('message','A new user joined!')
+
     socket.on('sendMessage',(msg)=>{
         io.emit('message',msg)
     })
+
+    socket.on('sendLocation',({latitude,longitude})=>{
+        io.emit('message',`https://google.com/maps?q=${latitude},${longitude}`)
+
+    })
     socket.on('disconnect',()=>{
-        io.emit('message','A user has been disconnected')
+        io.emit('message','A user has left!')
     })
    
     
