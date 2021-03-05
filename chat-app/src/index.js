@@ -12,20 +12,13 @@ const port = process.env.PORT || 3000;
 const publicDirectoryPath = path.join(__dirname,'../public');
 app.use(express.static(publicDirectoryPath))
 
-//server (emit) -> client(receive) - countUpdated
-//client (emit) -> server(receive) - inrement
-let count = 0;
 io.on('connection',(socket)=>{
     console.log("socket connected")
-    socket.emit('incrementUpdated',count)
-    socket.on('increment',()=>{
-        count++;
-        //This socket.emit is gonna emit this event to only a particular socket, which triggred this connection
-        //socket.emit('incrementUpdated',count)
-
-        //This io.emit is gonna emit this event to all of the available connected clients, kind of broadcast
-        io.emit('incrementUpdated',count)
+    socket.emit('message',"Welcome!")
+    socket.on('sendMessage',(msg)=>{
+        io.emit('message',msg)
     })
+   
     
 })
 
@@ -40,3 +33,14 @@ server.listen(port,(error,data)=>{
 Run by - npm run dev
 npm run start
 */
+
+ /*console.log("socket connected")
+    socket.emit('incrementUpdated',count)
+    socket.on('increment',()=>{
+        count++;
+        //This socket.emit is gonna emit this event to only a particular socket, which triggred this connection
+        //socket.emit('incrementUpdated',count)
+
+        //This io.emit is gonna emit this event to all of the available connected clients, kind of broadcast
+        io.emit('incrementUpdated',count)
+    })*/

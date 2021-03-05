@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+    </head>
     <body>
         <h3>Chat app</h3>
-        <button id="incrementor">+1</button>
+        <form autocomplete="off" id="chatform">
+            <textarea placeholder="Enter your message..." required id="textmsg"></textarea>
+            <input type="submit" value="Send">
+        </form>
+
         <script src="/socket.io/socket.io.js"></script>
         <script src="/chat.js"></script>
     </body>

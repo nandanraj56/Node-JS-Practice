@@ -1,8 +1,13 @@
 const socket = io()
-socket.on('incrementUpdated',(count)=>{
-    console.log("Increment updated to "+count)
+
+socket.on('message',(msg)=>{
+    console.log(msg)
+    
 })
-window.document.querySelector("#incrementor").addEventListener('click',()=>{
-    socket.emit('increment')
+document.querySelector("#chatform").addEventListener('submit',(e)=>{
+    e.preventDefault()
+    //e-> event varibale, target -> selected form, elements-> select childelements, textmsg-> child element id
+    const message = e.target.elements.textmsg.value
+    socket.emit('sendMessage',message)
 })
-console.log(io)
+
