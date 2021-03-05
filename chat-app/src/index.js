@@ -15,8 +15,12 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection',(socket)=>{
     console.log("socket connected")
     socket.emit('message',"Welcome!")
+    socket.broadcast.emit('message','A new user joined!')
     socket.on('sendMessage',(msg)=>{
         io.emit('message',msg)
+    })
+    socket.on('disconnect',()=>{
+        io.emit('message','A user has been disconnected')
     })
    
     
