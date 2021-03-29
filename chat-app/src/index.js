@@ -15,8 +15,15 @@ app.use(express.static(publicDirectoryPath))
 
 io.on('connection',(socket)=>{
     console.log("socket connected")
-    socket.emit('message',generateMessage('Welcome'))
-    socket.broadcast.emit('message','A new user joined!')
+    
+
+    socket.on('join',({username, room},callback)=>{
+
+        socket.join(room) //can only be called from server
+        socket.emit('message',generateMessage('Welcome'))
+        socket.broadcast.to(room).emit('message',generateMessage(`${username} has joined!`))
+
+    })
 
     socket.on('sendMessage',(msg,callback)=>{
         const filter = new Filter()
