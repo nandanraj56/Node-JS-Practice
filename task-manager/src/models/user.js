@@ -73,7 +73,7 @@ userSchema.methods.toJSON = function(){
 userSchema.methods.getAuthToken= async function(){
     const user = this
     const token = await jwt.sign({_id:user._id.toString()},process.env.JWT_SECRET)
-    //console.log(token)
+    console.log(token)
     user.tokens = user.tokens.concat({ token })
     try{
         await user.save()
@@ -116,8 +116,4 @@ userSchema.pre("remove",async function(next){
     next()
 })
 const User = mongoose.model('Users',userSchema)
-
-
-
-
 module.exports = User;
