@@ -10,9 +10,10 @@ const router = express.Router()
 
 //Signup
 router.post('/users', async (req, res) => {
+    console.log("went")
     const user = new User(req.body)
     try {
-
+        
         const data = await user.save()
         const token = await user.getAuthToken()
         sendWelcomeEmail(data.name,data.email)
